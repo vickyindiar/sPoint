@@ -12,16 +12,7 @@ const isLocalhost = Boolean(
   const version = process.env.REACT_APP_APIVERSION.substring(0, process.env.REACT_APP_APIVERSION.indexOf('.'))
   module.exports = {
     google: {
-      // API_KEY: "",
-      // CLIENT_ID: "",
-      // SECRET: "",
-      apiKey: "AIzaSyBo2wXtIkvvpa3EQsZ4_OFKltK2H4LQcWU",
-   //   authDomain: "ticketing-ntf.firebaseapp.com",
-      projectId: "ticketing-ntf",
-    //  storageBucket: "ticketing-ntf.appspot.com",
-      messagingSenderId: "857990037856",
-      appId: "1:857990037856:web:e86f49a84b8796b7341e05",
-      vapidkey: "BDq_Lxw1ysTLecWWul-KekJf45yELrIhfn444rchdG3KA3aPk2iRpzWfFTe1aqDJC6FQuktpt6VntMBeWtSlKs8"
+  
     },
     facebook: {
       APP_ID: "",
