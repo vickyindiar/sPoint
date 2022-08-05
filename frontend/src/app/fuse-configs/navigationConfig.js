@@ -28,9 +28,25 @@ const navigationConfig = [
         title:'Class',
         translate: 'Class',
         type: 'item',
-        icon: 'home',
+        icon: 'class',
         url: '/classes'
       },
+      {
+        id:'student-component',
+        title:'Student',
+        translate: 'Student',
+        type: 'item',
+        icon: 'school',
+        url: '/students'
+      },
+      {
+        id:'teachers-component',
+        title:'Teachers',
+        translate: 'Teachers',
+        type: 'item',
+        icon: 'person_pin',
+        url: '/teachers'
+      },      
       {
         id: 'example-component',
         title: 'Example',

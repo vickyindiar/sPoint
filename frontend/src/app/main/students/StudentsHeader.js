@@ -6,18 +6,14 @@ import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import { setClassesSearchText, openNewClassDialog } from '../../store/main/classesSlice';
+import { setStudentsSearchText, openNewStudentDialog } from '../../store/main/studentsSlice';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 
-
-
-function ClassesHeader(props) {
+function StudentsHeader(props) {
   const dispatch = useDispatch();
-  const searchText = useSelector( ({main}) => {
-    main.classes.searchText
-  });
+  const searchText = useSelector( ({main}) => { main.students.searchText });
   const mainTheme = useSelector(selectMainTheme);
 
   return (
@@ -32,7 +28,7 @@ function ClassesHeader(props) {
           receipt
         </Icon>
         <Typography component={motion.span} initial={{ x: -20 }} animate={{ x: 0, transition: { delay: 0.2 } }} delay={300} className="text-16 md:text-24 mx-12 font-semibold" >
-          Classes
+          Students
         </Typography>
       </div>
 
@@ -55,7 +51,7 @@ function ClassesHeader(props) {
               inputProps={{
                 'aria-label': 'Search',
               }}
-              onChange={(ev) => dispatch(setClassesSearchText(ev))}
+              onChange={(ev) => dispatch(setStudentsSearchText(ev))}
             />
           </Paper>
         </ThemeProvider>
@@ -66,13 +62,13 @@ function ClassesHeader(props) {
       >
         <Button
            onClick={() => {
-            dispatch(openNewClassDialog());
+            dispatch(openNewStudentDialog());
           }}
           className="whitespace-nowrap"
           variant="contained"
           color="secondary"
         >
-          <span className="hidden sm:flex">Add New Class</span>
+          <span className="hidden sm:flex">Add New Student</span>
           <span className="flex sm:hidden">New</span>
         </Button>
       </motion.div>
@@ -80,4 +76,4 @@ function ClassesHeader(props) {
   );
 }
 
-export default ClassesHeader;
+export default StudentsHeader;

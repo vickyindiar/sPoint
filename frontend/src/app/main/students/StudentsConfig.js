@@ -1,6 +1,5 @@
 import i18next from 'i18next';
-import Classes from './Classes';
-import ClassesDetail from './classesDetail/ClassesDetail';
+import Students from './Students';
 // import en from '../ /i18n/en';
 // import tr from './i18n/tr';
 // import ar from './i18n/ar';
@@ -9,7 +8,7 @@ import ClassesDetail from './classesDetail/ClassesDetail';
 // i18next.addResourceBundle('tr', 'examplePage', tr);
 // i18next.addResourceBundle('ar', 'examplePage', ar);
 
-const ClassesConfig = {
+const StudentsConfig = {
   settings: {
     layout: {
       config: {},
@@ -17,16 +16,12 @@ const ClassesConfig = {
   },
   routes: [
     {
-      path: '/classes',
-      component: Classes,
-    },
-    {
-      path: '/class/:classId',
-      component: ClassesDetail,
+      path: '/students',
+      component: Students,
     }
   ],
 };
 
-export default ClassesConfig;
+export default StudentsConfig;
 
 

@@ -18,12 +18,10 @@ import { useDispatch } from 'react-redux';
 // import { removeClasses } from '../../store/main/classesSlice';
 
 const rows = [
-  { id: '_id', align: 'center', disablePadding: false, label: 'ID', sort: true, },
-  { id: 'name', align: 'center', disablePadding: false, label: 'Class', sort: true, },
-  { id: 'teacher', align: 'center', disablePadding: false, label: 'Homeroom Teacher', sort: true, },
-  { id: 'total', align: 'center', disablePadding: false, label: 'Total Student', sort: true, },
-  { id: 'violation_point', align: 'center', disablePadding: false, label: 'Violation Point', sort: true, },
-  { id: 'action', align: 'center', disablePadding: false, label: 'action', sort: true, },
+  { id: '_id', align: 'left', disablePadding: false, label: 'ID', sort: true, },
+  { id: 'name', align: 'left', disablePadding: false, label: 'Kelas', sort: true, },
+  { id: 'teacher', align: 'left', disablePadding: false, label: 'Wali Kelas', sort: true, },
+  { id: 'total', align: 'left', disablePadding: false, label: 'Total Student', sort: true, },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ClassesTableHead(props) {
+function ClassesStudentsTableHead(props) {
   
   const classes = useStyles(props);
   const { selectedClassIds } = props;
@@ -113,11 +111,7 @@ function ClassesTableHead(props) {
               sortDirection={props.order.id === row.id ? props.order.direction : false}
             >
               {row.sort && (
-                <Tooltip
-                  title="Sort"
-                  placement={row.align === 'right' ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
+                <Tooltip title="Sort" placement={row.align === 'right' ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
                   <TableSortLabel
                     active={props.order.id === row.id}
                     direction={props.order.direction}
@@ -136,4 +130,5 @@ function ClassesTableHead(props) {
   );
 }
 
-export default ClassesTableHead;
+export default ClassesStudentsTableHead;
+

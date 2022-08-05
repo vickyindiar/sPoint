@@ -1,26 +1,26 @@
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import withReducer from 'app/store/withReducer';
 import reducer from '../../store';
-import ClassesHeader from './ClassesHeader';
-import ClassesTable from './ClassesTable';
-import ClassDialog from './ClassesDialog';
+import TeachersHeader from './TeachersHeader';
+import TeachersTable from './TeachersTable';
+import TeacherDialog from './TeachersDialog';
 
-function Classes() {
+function Teachers() {
   return (
     <>
     <FusePageCarded
-      classes={{
+      teachers={{
         content: 'flex',
         contentCard: 'overflow-hidden',
         header: 'min-h-72 h-72 sm:h-136 sm:min-h-136',
       }}
-      header={<ClassesHeader />}
-      content={<ClassesTable />}
+      header={<TeachersHeader />}
+      content={<TeachersTable />}
       innerScroll
       />
-        <ClassDialog />
+        <TeacherDialog />
     </>
   );
 }
 
-export default withReducer('Classes', reducer)(Classes);
+export default withReducer('Teachers', reducer)(Teachers);

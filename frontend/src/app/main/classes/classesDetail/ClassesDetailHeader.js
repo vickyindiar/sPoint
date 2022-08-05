@@ -6,44 +6,34 @@ import Typography from '@material-ui/core/Typography';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-import { setClassesSearchText, openNewClassDialog } from '../../store/main/classesSlice';
+import { setClassesSearchText, openNewClassDialog } from '../../../store/main/classesSlice';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
+import { useGetClassByIdQuery } from 'app/services/mainService';
+import { useEffect, useState } from 'react';
 
 
-
-
-function ClassesHeader(props) {
+function ClassesDetailHeader(props) {
   const dispatch = useDispatch();
-  const searchText = useSelector( ({main}) => {
-    main.classes.searchText
-  });
+  const urlParam = useParams()
+  const searchText = useSelector( ({main}) => { main.classes.searchText });
   const mainTheme = useSelector(selectMainTheme);
-
-  return (
+  const {data, isLoading} = useGetClassByIdQuery(urlParam.classId)
+  const [dataClass, setDataClass] = useState({name:''})
+  return !isLoading && (
     <div className="flex flex-1 w-full items-center justify-between">
       <div className="flex items-center">
-        <Icon
-          component={motion.span}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1, transition: { delay: 0.2 } }}
-          className="text-24 md:text-32"
-        >
+        <Icon component={motion.span} initial={{ scale: 0 }} animate={{ scale: 1, transition: { delay: 0.2 } }} className="text-24 md:text-32" >
           receipt
         </Icon>
         <Typography component={motion.span} initial={{ x: -20 }} animate={{ x: 0, transition: { delay: 0.2 } }} delay={300} className="text-16 md:text-24 mx-12 font-semibold" >
-          Classes
+          {`${data.name} Students Table` }
         </Typography>
       </div>
 
       <div className="flex flex-1 items-center justify-center px-12">
         <ThemeProvider theme={mainTheme}>
-          <Paper
-            component={motion.div}
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }}
-            className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow"
-          >
+          <Paper component={motion.div} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { delay: 0.2 } }} className="flex items-center w-full max-w-512 px-8 py-4 rounded-16 shadow" >
             <Icon color="action">search</Icon>
 
             <Input
@@ -60,10 +50,7 @@ function ClassesHeader(props) {
           </Paper>
         </ThemeProvider>
       </div>
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-      >
+      <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }} >
         <Button
            onClick={() => {
             dispatch(openNewClassDialog());
@@ -80,4 +67,6 @@ function ClassesHeader(props) {
   );
 }
 
-export default ClassesHeader;
+export default ClassesDetailHeader;
+
+

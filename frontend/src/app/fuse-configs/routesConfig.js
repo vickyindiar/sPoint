@@ -2,10 +2,12 @@ import { Redirect } from 'react-router-dom';
 import FuseUtils from '@fuse/utils';
 import ExampleConfig from 'app/main/example/ExampleConfig';
 import ClassesConfig from 'app/main/classes/ClassesConfig';
+import TeachersConfig from 'app/main/teachers/TeachersConfig';
+import StudentsConfig from 'app/main/students/StudentsConfig';
 import FuseLoading from '@fuse/core/FuseLoading';
 import Error404Page from 'app/main/404/Error404Page';
 
-const routeConfigs = [ExampleConfig, ClassesConfig];
+const routeConfigs = [ExampleConfig, ClassesConfig, TeachersConfig, StudentsConfig];
 
 const routes = [
   // if you want to make whole app auth protected by default change defaultAuth for example:

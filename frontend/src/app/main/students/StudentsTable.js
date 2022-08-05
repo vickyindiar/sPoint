@@ -14,13 +14,13 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import FuseLoading from '@fuse/core/FuseLoading';
-// import { selectClasses, getClasses } from '../../store/main/classesSlice';
-import ClassesTableHead from './ClassesTableHead';
-import { useDeleteClassMutation, useGetClassesQuery } from 'app/services/mainService';
+// import { selectStudents, getStudents } from '../../store/main/studentsSlice';
+import StudentsTableHead from './StudentsTableHead';
+import { useDeleteStudentMutation, useGetStudentsQuery } from 'app/services/mainService';
 import  isEmpty  from '../../helpers/isEmpty';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
-import { openEditClassDialog } from 'app/store/main/classesSlice';
+import { openEditStudentDialog } from 'app/store/main/studentsSlice';
 import { closeDialog, openDialog } from 'app/store/fuse/dialogSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -32,29 +32,29 @@ import Button from '@material-ui/core/Button';
 
 
 
-function ClassesTable(props) {
+function StudentsTable(props) {
   const dispatch = useDispatch();
-  // const classes = useSelector(selectClasses);
-  const searchText = useSelector(({ main }) => main.classes.searchText);
-  const { data, isLoading, error } = useGetClassesQuery()
-  const [ deleteClass, {isLoading: deleteLoading }] = useDeleteClassMutation()
+  // const students = useSelector(selectStudents);
+  const searchText = useSelector(({ main }) => main.students.searchText);
+  const { data, isLoading, error } = useGetStudentsQuery()
+  const [ deleteStudent, {isLoading: deleteLoading }] = useDeleteStudentMutation()
   // const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
-  const [dataClass, setDataClass] = useState(data);
+  const [dataStudent, setDataStudent] = useState(data);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sortDirection, setSortDirection] = useState({ direction: 'asc', id: null, });
 
   // useEffect(() => {
-  //   dispatch(getClasses()).then(() => setLoading(false));
+  //   dispatch(getStudents()).then(() => setLoading(false));
   // }, [dispatch]);
 
   useEffect(() => {
     if (searchText.length !== 0) {
-      setDataClass(FuseUtils.filterArrayByString(data, searchText));
+      setDataStudent(FuseUtils.filterArrayByString(data, searchText));
       setPage(0);
     } else {
-      setDataClass(data);
+      setDataStudent(data);
     }
   }, [data, searchText]);
 
@@ -70,7 +70,7 @@ function ClassesTable(props) {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      setSelected(dataClass.map((n) => n._id));
+      setSelected(dataStudent.map((n) => n._id));
       return;
     }
     setSelected([]);
@@ -81,7 +81,7 @@ function ClassesTable(props) {
   }
 
   function handleClick(item) {
-    props.history.push(`/class/${item._id}`);
+    props.history.push(`/student/${item._id}`);
   }
 
   function handleCheck(event, id) {
@@ -111,16 +111,16 @@ function ClassesTable(props) {
   function handleChangeRowsPerPage(event) {
     setRowsPerPage(event.target.value);
   }
-
+  console.log(dataStudent)
   function handleDeleteButton(id){
     dispatch(
       openDialog({
         children: (
           <>
-            <DialogTitle id="alert-dialog-title">Are you sure you want to delete this class?</DialogTitle>
+            <DialogTitle id="alert-dialog-title">Are you sure you want to delete this student?</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-               The students inside will no longer tied to this class
+               The students inside will no longer tied to this student
               </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -129,11 +129,11 @@ function ClassesTable(props) {
               </Button>
               <Button
                onClick={() => {
-                 deleteClass(id).then(f => {
+                 deleteStudent(id).then(f => {
                     dispatch(closeDialog())
                     dispatch(
                       showMessage({
-                          message     : 'Class success deleted',//text or html
+                          message     : 'Student success deleted',//text or html
                           autoHideDuration: 2000,//ms
                           anchorOrigin: {
                               vertical  : 'top',//top bottom
@@ -160,7 +160,7 @@ function ClassesTable(props) {
     return <FuseLoading />;
   }
 
-  if (!isEmpty(dataClass) && dataClass.length === 0) {
+  if (!isEmpty(dataStudent) && dataStudent.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -168,7 +168,7 @@ function ClassesTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="textSecondary" variant="h5">
-          There are no classes!
+          There are no students!
         </Typography>
       </motion.div>
     );
@@ -178,19 +178,19 @@ function ClassesTable(props) {
     <div className="w-full flex flex-col">
       <FuseScrollbars className="flex-grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-          <ClassesTableHead
-            selectedClassIds={selected}
+          <StudentsTableHead
+            selectedStudentIds={selected}
             order={sortDirection}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
-            rowCount={!isEmpty(dataClass) ? dataClass.length : 0}
+            rowCount={!isEmpty(dataStudent) ? dataStudent.length : 0}
             onMenuItemClick={handleDeselect}
           />
 
           <TableBody>
             {
             _.orderBy(
-              dataClass,
+              dataStudent,
               [
                 (o) => {
                   switch (sortDirection.id) {
@@ -200,11 +200,11 @@ function ClassesTable(props) {
                     case 'name': {
                       return o.name;
                     }
-                    case 'teacher': {
-                      return o.teachers
+                    case 'phone': {
+                      return o.phone
                     }
-                    case 'total': {
-                      return o.total
+                    case 'class': {
+                      return o.class
                     }
                     default: {
                       return o[sortDirection.id];
@@ -245,26 +245,15 @@ function ClassesTable(props) {
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="center">
-                      {n.homeroom_teachers?n.homeroom_teachers.name : ''  }
+                      {n.phone}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="center">
-                      {n.total}
-                    </TableCell>
-                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="center">
-                      {n.violationPoint} 
-                      <i
-                        className={clsx(
-                          'inline-block w-8 h-8 rounded mx-8',
-                          n.violationPoint >= 30 && 'bg-red',
-                          n.violationPoint > 5 && n.violationPoint <= 25 && 'bg-orange',
-                          n.violationPoint <= 5 && 'bg-green'
-                        )}
-                      />
+                      {n.class}
                     </TableCell>
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="center">
                         <div className="flex items-center">
-                          <IconButton onClick={(ev) => { ev.stopPropagation(); dispatch(openEditClassDialog(n))}} >
+                          <IconButton onClick={(ev) => { ev.stopPropagation(); dispatch(openEditStudentDialog(n))}} >
                               <Icon className='text-blue-400'>edit</Icon>
                           </IconButton>
                           <IconButton onClick={(ev) => { ev.stopPropagation();  handleDeleteButton(n._id) }} >
@@ -280,9 +269,9 @@ function ClassesTable(props) {
       </FuseScrollbars>
 
       <TablePagination
-        className="flex-shrink-0 bclass-t-1"
+        className="flex-shrink-0 bstudent-t-1"
         component="div"
-        count={!isEmpty(dataClass) ? dataClass.length : 0 }
+        count={!isEmpty(dataStudent) ? dataStudent.length : 0 }
         rowsPerPage={rowsPerPage}
         page={page}
         backIconButtonProps={{
@@ -298,4 +287,4 @@ function ClassesTable(props) {
   );
 }
 
-export default withRouter(ClassesTable);
+export default withRouter(StudentsTable);

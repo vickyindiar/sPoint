@@ -16,7 +16,6 @@ const classes = [
     {name:'1A', homeroom_teachers: 'Matt Murdock'},
     {name:'1B', homeroom_teachers: 'Natasha Romanov'},
     {name:'1C', homeroom_teachers: 'Steve Roger'},
-    {name:'2B', homeroom_teachers: 'Matt Murdock'},
     {name:'3A', homeroom_teachers: 'Thor Odin Son'},
 ]
 

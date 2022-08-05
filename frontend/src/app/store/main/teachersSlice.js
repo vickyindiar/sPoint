@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = { 
   searchText: '' ,
-  classDialog: {
+  teacherDialog: {
     type: 'new',
     props: {
       open: false,
@@ -12,18 +12,18 @@ const initialState = {
   },
 }
 
-const classesSlice = createSlice({
-  name: 'classes',
+const teachersSlice = createSlice({
+  name: 'teachers',
   initialState,
   reducers: {
-    setClassesSearchText: {
+    setTeachersSearchText: {
       reducer: (state, action) => {
         state.searchText = action.payload;
       },
       prepare: (event) => ({ payload: event.target.value || '' }),
     },
-    openNewClassDialog: (state, action) => {
-      state.classDialog = {
+    openNewTeacherDialog: (state, action) => {
+      state.teacherDialog = {
         type: 'new',
         props: {
           open: true,
@@ -31,8 +31,8 @@ const classesSlice = createSlice({
         data: null,
       };
     },
-    closeNewClassDialog: (state, action) => {
-      state.classDialog = {
+    closeNewTeacherDialog: (state, action) => {
+      state.teacherDialog = {
         type: 'new',
         props: {
           open: false,
@@ -40,8 +40,8 @@ const classesSlice = createSlice({
         data: null,
       };
     },
-    openEditClassDialog: (state, action) => {
-      state.classDialog = {
+    openEditTeacherDialog: (state, action) => {
+      state.teacherDialog = {
         type: 'edit',
         props: {
           open: true,
@@ -49,8 +49,8 @@ const classesSlice = createSlice({
         data: action.payload,
       };
     },
-    closeEditClassDialog: (state, action) => {
-      state.classDialog = {
+    closeEditTeacherDialog: (state, action) => {
+      state.teacherDialog = {
         type: 'edit',
         props: {
           open: false,
@@ -61,6 +61,6 @@ const classesSlice = createSlice({
   },
 })
 
-export const { setClassesSearchText, openNewClassDialog, openEditClassDialog, closeEditClassDialog, closeNewClassDialog } = classesSlice.actions;
+export const { setTeachersSearchText, openNewTeacherDialog, openEditTeacherDialog, closeEditTeacherDialog, closeNewTeacherDialog } = teachersSlice.actions;
 
-export default classesSlice.reducer;
+export default teachersSlice.reducer;

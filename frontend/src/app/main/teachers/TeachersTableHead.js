@@ -15,15 +15,14 @@ import Tooltip from '@material-ui/core/Tooltip';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { removeClasses } from '../../store/main/classesSlice';
+// import { removeTeachers } from '../../store/main/teachersSlice';
 
 const rows = [
   { id: '_id', align: 'center', disablePadding: false, label: 'ID', sort: true, },
-  { id: 'name', align: 'center', disablePadding: false, label: 'Class', sort: true, },
-  { id: 'teacher', align: 'center', disablePadding: false, label: 'Homeroom Teacher', sort: true, },
-  { id: 'total', align: 'center', disablePadding: false, label: 'Total Student', sort: true, },
-  { id: 'violation_point', align: 'center', disablePadding: false, label: 'Violation Point', sort: true, },
-  { id: 'action', align: 'center', disablePadding: false, label: 'action', sort: true, },
+  { id: 'name', align: 'center', disablePadding: false, label: 'Name', sort: true, },
+  { id: 'phone', align: 'center', disablePadding: false, label: 'Phone', sort: true, },
+  { id: 'class', align: 'center', disablePadding: false, label: 'Class', sort: true, },
+  { id: 'action', align: 'center', disablePadding: false, label: 'Action', sort: true, }
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -32,13 +31,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ClassesTableHead(props) {
+function TeachersTableHead(props) {
   
-  const classes = useStyles(props);
-  const { selectedClassIds } = props;
-  const numSelected = selectedClassIds.length;
+  const teachers = useStyles(props);
+  const { selectedTeacherIds } = props;
+  const numSelected = selectedTeacherIds.length;
 
-  const [selectedClassesMenu, setSelectedClassesMenu] = useState(null);
+  const [selectedTeachersMenu, setSelectedTeachersMenu] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -46,15 +45,15 @@ function ClassesTableHead(props) {
     props.onRequestSort(event, property);
   };
 
-  function openSelectedClassesMenu(event) {
-    setSelectedClassesMenu(event.currentTarget);
+  function openSelectedTeachersMenu(event) {
+    setSelectedTeachersMenu(event.currentTarget);
   }
 
-  function closeSelectedClassesMenu() {
-    setSelectedClassesMenu(null);
+  function closeSelectedTeachersMenu() {
+    setSelectedTeachersMenu(null);
   }
 
-  // const {onSelectAllClick, class, classBy, numSelected, rowCount} = props;
+  // const {onSelectAllClick, teacher, teacherBy, numSelected, rowCount} = props;
 
   return (
     <TableHead>
@@ -68,29 +67,29 @@ function ClassesTableHead(props) {
           {numSelected > 0 && (
             <div
               className={clsx(
-                'flex items-center justify-center absolute w-64 top-0 ltr:left-0 rtl:right-0 mx-56 h-64 z-10 bclass-b-1',
-                classes.actionsButtonWrapper
+                'flex items-center justify-center absolute w-64 top-0 ltr:left-0 rtl:right-0 mx-56 h-64 z-10 bteacher-b-1',
+                teachers.actionsButtonWrapper
               )}
             >
               <IconButton
-                aria-owns={selectedClassesMenu ? 'selectedClassesMenu' : null}
+                aria-owns={selectedTeachersMenu ? 'selectedTeachersMenu' : null}
                 aria-haspopup="true"
-                onClick={openSelectedClassesMenu}
+                onClick={openSelectedTeachersMenu}
               >
                 <Icon>more_horiz</Icon>
               </IconButton>
               <Menu
-                id="selectedClassesMenu"
-                anchorEl={selectedClassesMenu}
-                open={Boolean(selectedClassesMenu)}
-                onClose={closeSelectedClassesMenu}
+                id="selectedTeachersMenu"
+                anchorEl={selectedTeachersMenu}
+                open={Boolean(selectedTeachersMenu)}
+                onClose={closeSelectedTeachersMenu}
               >
                 <MenuList>
                   <MenuItem
                     onClick={() => {
-                      // dispatch(removeClasses(selectedClassIds));
+                      // dispatch(removeTeachers(selectedTeacherIds));
                       // props.onMenuItemClick();
-                      closeSelectedClassesMenu();
+                      closeSelectedTeachersMenu();
                     }}
                   >
                     <ListItemIcon className="min-w-40">
@@ -113,11 +112,7 @@ function ClassesTableHead(props) {
               sortDirection={props.order.id === row.id ? props.order.direction : false}
             >
               {row.sort && (
-                <Tooltip
-                  title="Sort"
-                  placement={row.align === 'right' ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
+                <Tooltip title="Sort" placement={row.align === 'right' ? 'bottom-end' : 'bottom-start'} enterDelay={300} >
                   <TableSortLabel
                     active={props.order.id === row.id}
                     direction={props.order.direction}
@@ -136,4 +131,4 @@ function ClassesTableHead(props) {
   );
 }
 
-export default ClassesTableHead;
+export default TeachersTableHead;
